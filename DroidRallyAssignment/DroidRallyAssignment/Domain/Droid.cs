@@ -27,5 +27,9 @@ namespace DroidRallyAssignment.Domain
                 Direction = direction
             };
         }
+        public string GetState()
+        {
+            return $"{X} {Y} {Direction}";
+        }
     }
 }

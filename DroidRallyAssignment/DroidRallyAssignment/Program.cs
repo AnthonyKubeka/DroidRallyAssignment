@@ -46,6 +46,7 @@ while (true)
         if (droidInputEmptyLineCount >= 2)
         {
             Console.WriteLine("Finished all input. End state below:");
+            Console.WriteLine(grid.GetDroidStates());
             Console.WriteLine("Exiting droid navigation module. Goodbye!");
             break;
         }
@@ -63,6 +64,8 @@ while (true)
     }
 
     var droid = Droid.InitialiseDroid(droidInput);
+    grid.AddDroid(droid);
+
     Console.WriteLine($"Droid initialised at position and direction: {droidInput}");
 
 
