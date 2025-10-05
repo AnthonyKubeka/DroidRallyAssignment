@@ -112,5 +112,15 @@ namespace DroidRallyAssignmentTests
             d.ExecuteCommand(Commands.R, g);
             Assert.Equal(Directions.E, d.Direction);
         }
+
+        [Fact]
+        public void Given_Droid_When_CommandIsMove_Then_ShouldNotMoveIfWouldMoveOutOfBoundsOfGrid()
+        {
+            var g = Grid.InitialiseGrid("5 5");
+            var d = Droid.InitialiseDroid("5 5 N");
+
+            d.ExecuteCommand(Commands.M, g);
+            Assert.Equal("5 5 N", d.GetState());
+        }
     }
 }
