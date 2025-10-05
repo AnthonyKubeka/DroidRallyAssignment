@@ -29,16 +29,19 @@ namespace DroidRallyAssignmentTests
         {
             var droidInput = "1 2 N";
             
+            var result = DroidRallyAssignment.Application.DroidInputValidator.IsValidDroidInput(droidInput);
             
-            //Assert.True(result);
+            Assert.True(result);
         }
 
         [Fact]
         public void Given_DroidInput_When_DroidInputInValid_Then_ShouldFailAssertAsValid()
         {
             var droidInput = "12NFF";
-        
-            //Assert.False(result);
+            
+            var result = DroidRallyAssignment.Application.DroidInputValidator.IsValidDroidInput(droidInput);
+            
+            Assert.False(result);
         }
     }
 }
