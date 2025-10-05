@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DroidRallyAssignment.Application;
+using DroidRallyAssignment.Domain;
 
 Console.WriteLine("Hello, World!");
 
@@ -25,3 +26,6 @@ if (!DroidInputValidator.IsValidGridDimensions(gridDimensions))
     Console.WriteLine("Invalid grid dimensions. Please ensure you enter two positive integers separated by a space.");
     return;
 }
+
+var grid = Grid.InitialiseGrid(gridDimensions);
+Console.WriteLine($"Grid initialised with upper-right coordinates: {grid.TopRightX} {grid.TopRightY}");
