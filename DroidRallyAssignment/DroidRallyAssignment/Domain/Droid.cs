@@ -1,10 +1,5 @@
 ﻿using DroidRallyAssignment.Application;
 using DroidRallyAssignment.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DroidRallyAssignment.Domain
 {
@@ -66,7 +61,7 @@ namespace DroidRallyAssignment.Domain
                     Direction = Directions.N;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(); 
+                    throw new ArgumentOutOfRangeException();
 
             }
         }

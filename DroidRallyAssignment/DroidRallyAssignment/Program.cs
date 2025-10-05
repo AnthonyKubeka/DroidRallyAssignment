@@ -3,8 +3,6 @@ using DroidRallyAssignment.Application;
 using DroidRallyAssignment.Domain;
 using DroidRallyAssignment.Domain.Enums;
 
-Console.WriteLine("Hello, World!");
-
 /**Brief:
  * Droid A has a position (X, Y) and a direction (N, S, E, W)
  * Grid start coordinates are (0,0) in the bottom left corner

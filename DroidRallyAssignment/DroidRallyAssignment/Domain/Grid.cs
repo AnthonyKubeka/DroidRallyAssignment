@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DroidRallyAssignment.Domain
+﻿namespace DroidRallyAssignment.Domain
 {
     public class Grid
     {
@@ -17,7 +11,7 @@ namespace DroidRallyAssignment.Domain
             return new Grid
             {
                 TopRightX = int.Parse(dimensions[0]),
-                TopRightY = int.Parse(dimensions[1])
+                TopRightY = int.Parse(dimensions[1]), 
             };
         }
         public void AddDroid(Droid droid)

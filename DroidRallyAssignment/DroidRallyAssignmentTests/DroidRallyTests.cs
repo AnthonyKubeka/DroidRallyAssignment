@@ -6,35 +6,34 @@ namespace DroidRallyAssignmentTests
 {
     public class DroidRallyTests
     {
-        [Fact]
-        public void Given_GridDimensions_When_DimensionsAreValid_Then_ShouldAssertAsValid()
+        [Theory]
+        [InlineData("5 5")]
+        [InlineData("10 3")]
+        public void Given_GridDimensions_When_DimensionsAreValid_Then_ShouldAssertAsValid(string gridDimensions)
         {
-            // Arrange
-            var gridDimensions = "5 5";
-            // Act
-            var result = DroidRallyAssignment.Application.DroidInputValidator.IsValidGridDimensions(gridDimensions);
-            // Assert
-            Assert.True(result);
+            Assert.True(DroidInputValidator.IsValidGridDimensions(gridDimensions));
         }
 
-        [Fact]
-        public void Given_GridDimensions_When_DimensionsAreInValid_Then_ShouldFailAssertAsValid()
+        [Theory]
+        [InlineData("")]
+        [InlineData("5")]
+        [InlineData("55")]
+        [InlineData("5,5")]
+        [InlineData("0 5")]
+        [InlineData("-1 2")]
+        [InlineData("5 0")]
+        public void Given_GridDimensions_When_DimensionsAreInValid_Then_ShouldFailAssertAsValid(string gridDimensions)
         {
-            // Arrange
-            var gridDimensions = "55";
-            // Act
-            var result = DroidRallyAssignment.Application.DroidInputValidator.IsValidGridDimensions(gridDimensions);
-            // Assert
-            Assert.False(result);
+            Assert.False(DroidInputValidator.IsValidGridDimensions(gridDimensions));
         }
 
         [Fact]
         public void Given_DroidInput_When_DroidInputValid_Then_ShouldAssertAsValid()
         {
             var droidInput = "1 2 N";
-            
-            var result = DroidRallyAssignment.Application.DroidInputValidator.IsValidDroidInput(droidInput);
-            
+
+            var result = DroidInputValidator.IsValidDroidInput(droidInput);
+
             Assert.True(result);
         }
 
@@ -42,9 +41,9 @@ namespace DroidRallyAssignmentTests
         public void Given_DroidInput_When_DroidInputInValid_Then_ShouldFailAssertAsValid()
         {
             var droidInput = "12NFF";
-            
-            var result = DroidRallyAssignment.Application.DroidInputValidator.IsValidDroidInput(droidInput);
-            
+
+            var result = DroidInputValidator.IsValidDroidInput(droidInput);
+
             Assert.False(result);
         }
 
@@ -71,7 +70,7 @@ namespace DroidRallyAssignmentTests
         }
 
         [Fact]
-        public void Given_CommandSequence_When_CommandSequenceIsValid_Then_ShouldParseCorrectly()
+        public void Given_CommandSequence_When_CommandSequenceIsValid_Then_ShouldParseCorrectlySpecificCommand()
         {
             var input = "L";
 
@@ -81,11 +80,24 @@ namespace DroidRallyAssignmentTests
             Assert.Equal(Commands.L, command.First());
         }
 
-        [Fact]
-        public void Given_CommandSequence_When_CommandSequenceIsInvalid_Then_ShouldFailParse()
+        [Theory]
+        [InlineData("L")]
+        [InlineData("LMLMR")]
+        [InlineData("mmm")]
+        [InlineData("rrl")]
+        public void Given_CommandSequence_When_CommandSequenceIsValid_Then_ShouldParseCorrectly(string input)
         {
-            var input = "P";
+            var result = EnumMapper.TryParseCommandSequence(input, out var command);
 
+            Assert.True(result);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("LMX")]
+        [InlineData("M1")]
+        public void Given_CommandSequence_When_CommandSequenceIsInvalid_Then_ShouldFailParse(string input)
+        {
             var result = EnumMapper.TryParseCommandSequence(input, out var command);
 
             Assert.False(result);
@@ -97,16 +109,16 @@ namespace DroidRallyAssignmentTests
             var g = Grid.InitialiseGrid("5 5");
             var d = Droid.InitialiseDroid("1 1 N");
 
-            d.ExecuteCommand(Commands.L, g); 
+            d.ExecuteCommand(Commands.L, g);
             Assert.Equal(Directions.W, d.Direction);
 
-            d.ExecuteCommand(Commands.L, g); 
+            d.ExecuteCommand(Commands.L, g);
             Assert.Equal(Directions.S, d.Direction);
 
-            d.ExecuteCommand(Commands.L, g); 
+            d.ExecuteCommand(Commands.L, g);
             Assert.Equal(Directions.E, d.Direction);
 
-            d.ExecuteCommand(Commands.L, g); 
+            d.ExecuteCommand(Commands.L, g);
             Assert.Equal(Directions.N, d.Direction);
 
             d.ExecuteCommand(Commands.R, g);
