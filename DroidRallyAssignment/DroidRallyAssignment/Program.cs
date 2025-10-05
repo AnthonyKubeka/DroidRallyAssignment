@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DroidRallyAssignment.Application;
 using DroidRallyAssignment.Domain;
+using DroidRallyAssignment.Domain.Enums;
 
 Console.WriteLine("Hello, World!");
 
@@ -104,7 +105,16 @@ while (true)
 
         foreach (var command in commands)
         {
-            //TODO: execute commands for the droid, print etc.
+            var currentPosition = droid.GetState();
+            droid.ExecuteCommand(command, grid);
+
+            if (currentPosition == droid.GetState() && command == Commands.M)
+            {
+                Console.WriteLine($"Droid attempted to execute command: {command}, but move was invalid (out of bounds or position occupied). Current position and direction remains: {droid.GetState()}");
+                continue;
+            }
+
+            Console.WriteLine($"Droid executed command: {command}. Current position and direction: {droid.GetState()}");
         }
     }
 }
