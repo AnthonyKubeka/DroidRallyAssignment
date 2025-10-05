@@ -29,3 +29,41 @@ if (!DroidInputValidator.IsValidGridDimensions(gridDimensions))
 
 var grid = Grid.InitialiseGrid(gridDimensions);
 Console.WriteLine($"Grid initialised with upper-right coordinates: {grid.TopRightX} {grid.TopRightY}");
+
+int droidInputEmptyLineCount = 0;
+while (true)
+{
+    Console.WriteLine("Input the droid's starting position and direction, then press Enter.");
+    Console.WriteLine("Format: X Y D. Two non-negative integers and a direction (N, E, S, W) seperated by a single space");
+    Console.WriteLine("Press Enter on an empty line twice here to finish all input and exit.");
+    Console.WriteLine("Awaiting droid starting position and direction...");
+
+    var droidInput = Console.ReadLine();
+
+    if (string.IsNullOrWhiteSpace(droidInput))
+    {
+        droidInputEmptyLineCount++;
+        if (droidInputEmptyLineCount >= 2)
+        {
+            Console.WriteLine("Finished all input. End state below:");
+            Console.WriteLine("Exiting droid navigation module. Goodbye!");
+            break;
+        }
+        Console.WriteLine("Empty line detected. Press Enter again to exit or provide droid starting position and direction to continue.");
+        continue;
+
+    }
+
+    droidInputEmptyLineCount = 0;
+
+    if (!DroidInputValidator.IsValidDroidInput(droidInput))
+    {
+        Console.WriteLine("Invalid droid input. Please ensure you enter two non-negative integers and a direction (N, E, S, W) separated by spaces. Try again");
+        continue;
+    }
+
+    var droid = Droid.InitialiseDroid(droidInput);
+    Console.WriteLine($"Droid initialised at position and direction: {droidInput}");
+
+
+}
