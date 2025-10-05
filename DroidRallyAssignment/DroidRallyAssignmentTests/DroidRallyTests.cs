@@ -70,14 +70,14 @@ namespace DroidRallyAssignmentTests
         }
 
         [Fact]
-        public void Given_Command_When_CommandIsValid_Then_ShouldParseCorrectly()
+        public void Given_CommandSequence_When_CommandSequenceIsValid_Then_ShouldParseCorrectly()
         {
             var input = "L";
 
-            var result = EnumMapper.TryParseCommand(input, out var command);
+            var result = EnumMapper.TryParseCommandSequence(input, out var command);
 
             Assert.True(result);
-            Assert.Equal(Commands.L, command);
+            Assert.Equal(Commands.L, command.First());
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace DroidRallyAssignmentTests
         {
             var input = "P";
 
-            var result = EnumMapper.TryParseCommand(input, out var command);
+            var result = EnumMapper.TryParseCommandSequence(input, out var command);
 
             Assert.False(result);
         }

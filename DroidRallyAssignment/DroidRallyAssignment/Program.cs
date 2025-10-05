@@ -68,5 +68,43 @@ while (true)
 
     Console.WriteLine($"Droid initialised at position and direction: {droidInput}");
 
+    //--Command entry for droid--//
 
+    Console.WriteLine("Input a command for the droid, then press Enter.");
+    Console.WriteLine("Format: L (for left) R (for right) M (for move in current direction).");
+    Console.WriteLine("You can enter a single command or a sequence like LMLMR.");
+    Console.WriteLine("Press Enter on an empty line twice to finish entering commands for this droid and return to doing so for another droid.");
+
+    int commandInputEmptyLineCount = 0;
+
+    while (true) //while true is weird, but works for keeping console app 'alive' until termination condition
+    {
+        Console.WriteLine("Awaiting command input...");
+        var commandInput = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(commandInput))
+        {
+            commandInputEmptyLineCount++;
+            if (commandInputEmptyLineCount >= 2)
+            {
+                Console.WriteLine("Finished entering commands for this droid. Returning to droid input.");
+                break;
+            }
+            Console.WriteLine("Empty line detected. Press Enter again to finish commands for this droid or provide command input to continue.");
+            continue;
+        }
+
+        commandInputEmptyLineCount = 0;
+
+        if (!EnumMapper.TryParseCommandSequence(commandInput, out var commands))
+        {
+            Console.WriteLine("Invalid command input. Please ensure you enter a string of commands containing only the characters L, R, and M. Or Press Enter twice to end input for this droid");
+            continue;
+        }
+
+        foreach (var command in commands)
+        {
+            //TODO: execute commands for the droid, print etc.
+        }
+    }
 }

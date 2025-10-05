@@ -35,19 +35,36 @@ namespace DroidRallyAssignment.Application
                     return false;
             }
         }
+        public static bool TryParseCommandSequence(this string commandSequenceInput, out List<Commands> commands)
+        {
+            commands = new List<Commands>();
+            if (string.IsNullOrWhiteSpace(commandSequenceInput))
+            {
+                return false;
+            }
+            foreach (var character in commandSequenceInput.Trim().ToUpperInvariant())
+            {
+                if (!TryParseCommand(character, out var command))
+                {
+                    return false;
+                }
+                commands.Add(command);
+            }
+            return true;
+        }
 
-        public static bool TryParseCommand(this string commandInput, out Commands command)
+        private static bool TryParseCommand(this char commandCharInput, out Commands command)
         {
             command = default;
-            switch (commandInput.ToUpperInvariant())
+            switch (char.ToUpperInvariant(commandCharInput))
             {
-                case "L":
+                case 'L':
                     command = Commands.L;
                     return true;
-                case "R":
+                case 'R':
                     command = Commands.R;
                     return true;
-                case "M":
+                case 'M':
                     command = Commands.M;
                     return true;
                 default:
