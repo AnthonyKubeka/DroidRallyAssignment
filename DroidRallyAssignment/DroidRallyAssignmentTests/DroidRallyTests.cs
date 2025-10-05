@@ -1,3 +1,6 @@
+using DroidRallyAssignment.Application;
+using DroidRallyAssignment.Domain.Enums;
+
 namespace DroidRallyAssignmentTests
 {
     public class DroidRallyTests
@@ -42,6 +45,28 @@ namespace DroidRallyAssignmentTests
             var result = DroidRallyAssignment.Application.DroidInputValidator.IsValidDroidInput(droidInput);
             
             Assert.False(result);
+        }
+
+        [Theory]
+        [InlineData("N", Directions.N)]
+        [InlineData("E", Directions.E)]
+        [InlineData("S", Directions.S)]
+        [InlineData("W", Directions.W)]
+        public void Given_Direction_When_DirectionIsValid_Then_ShouldParseCorrectly(string inputDirection, Directions expectedDirection)
+        {
+            Assert.True(EnumMapper.TryParseDirection(inputDirection, out var resultDirection));
+            Assert.Equal(expectedDirection, resultDirection);
+        }
+
+        [Theory]
+        [InlineData("NE")]
+        [InlineData("X")]
+        [InlineData("north")]
+        [InlineData("-1")]
+        [InlineData("")]
+        public void Given_Direction_When_DirectionIsInValid_Then_ShouldFailParse(string inputDirection)
+        {
+            Assert.False(EnumMapper.TryParseDirection(inputDirection, out var resultDirection));
         }
     }
 }
