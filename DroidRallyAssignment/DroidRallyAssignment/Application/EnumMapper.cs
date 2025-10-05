@@ -17,7 +17,7 @@ namespace DroidRallyAssignment.Application
                 return false;
             }
 
-            switch (directionStringInput.Trim().ToUpper())
+            switch (directionStringInput.Trim().ToUpperInvariant())
             {
                 case "N":
                     direction = Directions.N;
@@ -30,6 +30,25 @@ namespace DroidRallyAssignment.Application
                     return true;
                 case "W":
                     direction = Directions.W;
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool TryParseCommand(this string commandInput, out Commands command)
+        {
+            command = default;
+            switch (commandInput.ToUpperInvariant())
+            {
+                case "L":
+                    command = Commands.L;
+                    return true;
+                case "R":
+                    command = Commands.R;
+                    return true;
+                case "M":
+                    command = Commands.M;
                     return true;
                 default:
                     return false;

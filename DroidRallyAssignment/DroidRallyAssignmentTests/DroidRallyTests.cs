@@ -68,5 +68,26 @@ namespace DroidRallyAssignmentTests
         {
             Assert.False(EnumMapper.TryParseDirection(inputDirection, out var resultDirection));
         }
+
+        [Fact]
+        public void Given_Command_When_CommandIsValid_Then_ShouldParseCorrectly()
+        {
+            var input = "L";
+
+            var result = EnumMapper.TryParseCommand(input, out var command);
+
+            Assert.True(result);
+            Assert.Equal(Commands.L, command);
+        }
+
+        [Fact]
+        public void Given_Command_When_CommandIsInvalid_Then_ShouldFailParse()
+        {
+            var input = "P";
+
+            var result = EnumMapper.TryParseCommand(input, out var command);
+
+            Assert.False(result);
+        }
     }
 }
