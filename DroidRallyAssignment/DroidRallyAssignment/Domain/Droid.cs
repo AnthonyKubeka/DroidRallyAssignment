@@ -31,5 +31,105 @@ namespace DroidRallyAssignment.Domain
         {
             return $"{X} {Y} {Direction}";
         }
+
+        public void ExecuteCommand(Commands command, Grid grid)
+        {
+            switch (command)
+            {
+                case Commands.L:
+                    TurnLeft();
+                    break;
+                case Commands.R:
+                    TurnRight();
+                    break;
+                case Commands.M:
+                    MoveForward(grid);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(command), command, null);
+            }
+        }
+        private void TurnLeft()
+        {
+            switch (Direction)
+            {
+                case Directions.N:
+                    Direction = Directions.W;
+                    break;
+                case Directions.W:
+                    Direction = Directions.S;
+                    break;
+                case Directions.S:
+                    Direction = Directions.E;
+                    break;
+                case Directions.E:
+                    Direction = Directions.N;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(); 
+
+            }
+        }
+
+        private void TurnRight()
+        {
+            switch (Direction)
+            {
+                case Directions.N:
+                    Direction = Directions.E;
+                    break;
+                case Directions.W:
+                    Direction = Directions.N;
+                    break;
+                case Directions.S:
+                    Direction = Directions.W;
+                    break;
+                case Directions.E:
+                    Direction = Directions.S;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+
+            }
+        }
+
+        private void MoveForward(Grid grid)
+        {
+            var newX = X;
+            var newY = Y;
+
+            switch (Direction)
+            {
+                case Directions.N:
+                    newY++;
+                    break;
+                case Directions.E:
+                    newX++;
+                    break;
+                case Directions.S:
+                    newY--;
+                    break;
+                case Directions.W:
+                    newX--;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if (IsAbleToMoveForward(newX, newY, grid))
+            {
+                X = newX;
+                Y = newY;
+            }
+        }
+
+        private bool IsAbleToMoveForward(int newX, int newY, Grid grid)
+        {
+            if (newX < 0 || newY < 0 || newX > grid.TopRightX || newY > grid.TopRightY)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

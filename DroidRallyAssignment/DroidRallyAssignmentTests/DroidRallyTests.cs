@@ -1,4 +1,5 @@
 using DroidRallyAssignment.Application;
+using DroidRallyAssignment.Domain;
 using DroidRallyAssignment.Domain.Enums;
 
 namespace DroidRallyAssignmentTests
@@ -81,13 +82,35 @@ namespace DroidRallyAssignmentTests
         }
 
         [Fact]
-        public void Given_Command_When_CommandIsInvalid_Then_ShouldFailParse()
+        public void Given_CommandSequence_When_CommandSequenceIsInvalid_Then_ShouldFailParse()
         {
             var input = "P";
 
             var result = EnumMapper.TryParseCommandSequence(input, out var command);
 
             Assert.False(result);
+        }
+
+        [Fact]
+        public void Given_Droid_When_CommandIsTurn_Then_ShouldFaceCorrectDirection()
+        {
+            var g = Grid.InitialiseGrid("5 5");
+            var d = Droid.InitialiseDroid("1 1 N");
+
+            d.ExecuteCommand(Commands.L, g); 
+            Assert.Equal(Directions.W, d.Direction);
+
+            d.ExecuteCommand(Commands.L, g); 
+            Assert.Equal(Directions.S, d.Direction);
+
+            d.ExecuteCommand(Commands.L, g); 
+            Assert.Equal(Directions.E, d.Direction);
+
+            d.ExecuteCommand(Commands.L, g); 
+            Assert.Equal(Directions.N, d.Direction);
+
+            d.ExecuteCommand(Commands.R, g);
+            Assert.Equal(Directions.E, d.Direction);
         }
     }
 }
